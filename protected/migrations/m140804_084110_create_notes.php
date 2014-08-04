@@ -18,9 +18,8 @@ class m140804_084110_create_notes extends CDbMigration
 			'Date' => 'DATETIME',
 			'id_Note' => '',
 		),'ENGINE InnoDB  CHARACTER SET=UTF8');
-		$this->addForeignKey('notes', 'notes', 'id_Note', 'tbl_category', 
-			'id_Note', 'CASCADE', 'CASCADE');    
-
+		$this->addForeignKey('FK_comment_note', 'comments', 'id_Note', 
+			'notes', 'id_Note', 'CASCADE', 'CASCADE');
 	}
 
 	public function down()
