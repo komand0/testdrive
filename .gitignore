@@ -37,3 +37,6 @@ Icon
 
 #log files
 *.log
+
+#cache files
+/protected/runtime/cache/

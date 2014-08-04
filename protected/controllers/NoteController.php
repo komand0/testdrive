@@ -97,22 +97,18 @@ class NoteController extends Controller
 			'CModel'=>$CModel,
 		));
 
-
-
-		$this->widget(
-                'booster.widgets.TbSelect2', array(
-            'asDropDownList' => false,
-            'name' => 'clevertech',
-            'options' => array(
-                'tags' => array('clever', 'is', 'better', 'clevertech'),
-                'placeholder' => 'type clever, or is, or just type!',
-                'width' => '40%',
-                'tokenSeparators' => array(',', ' ')
-            )
-                )
-        );
-
-
+		// $this->widget(
+		// 		'booster.widgets.TbSelect2', array(
+		// 	'asDropDownList' => false,
+		// 	'name' => 'clevertech',
+		// 	'options' => array(
+		// 		'tags' => array('clever', 'is', 'better', 'clevertech'),
+		// 		'placeholder' => 'type clever, or is, or just type!',
+		// 		'width' => '40%',
+		// 		'tokenSeparators' => array(',', ' ')
+		// 	)
+		// 		)
+		// );
 		// // Set up several flashes
 		// // (this should be done somewhere in controller, of course).
 		// $user = Yii::app()->getComponent('user');
