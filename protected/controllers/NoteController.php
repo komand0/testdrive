@@ -12,9 +12,9 @@ class NoteController extends Controller
 			$auth = urldecode($auth);
 			$_auth=addCslashes($auth, '\%_"\\');
 			$_auth = str_replace(array('\\\\'), array('\\\\\\\\'), $_auth);
-			$criteria->condition = 'Author LIKE "'.($_auth).'"';
+			$criteria->condition = "author LIKE '".($_auth)."'";
 			//throw new CHttpException(404,'au='.$criteria->condition);
-			// 	$criteria->compare('Author',$auth,false);
+			// 	$criteria->compare('author',$auth,false);
 		}
 		if($q!==false)
 		{
@@ -22,17 +22,17 @@ class NoteController extends Controller
 				$criteria->condition .= ' AND ';
 			$_q = addcslashes($q, "'\\\"%_");
 			$_q = addcslashes($_q, "\\");
-			//$criteria->addColumnCondition(array('Title'=>$q, 'Content'=>$q), 'OR');			
-			//$criteria->addSearchCondition('Title', $q, true);
-			//$criteria->addSearchCondition('Content', $q."", true, 'OR');
-			//$criteria->compare('Title','"'.$q.'"',true);
-			//$criteria->compare('Content','"'.$q.'"',true);
-			$criteria->condition .= "(Title LIKE '%".$_q."%'";
-			$criteria->condition .= " OR Content LIKE '%".$_q."%')";
+			//$criteria->addColumnCondition(array('title'=>$q, 'content'=>$q), 'OR');			
+			//$criteria->addSearchCondition('title', $q, true);
+			//$criteria->addSearchCondition('content', $q."", true, 'OR');
+			//$criteria->compare('title','"'.$q.'"',true);
+			//$criteria->compare('content','"'.$q.'"',true);
+			$criteria->condition .= "(title LIKE '%".$_q."%'";
+			$criteria->condition .= " OR content LIKE '%".$_q."%')";
 			//throw new CHttpException(404,'au='.$criteria->condition);
 		}
 		
-		$criteria->order = 'Date DESC';
+		$criteria->order = 'date DESC';
 
 		$dataProvider = new CActiveDataProvider('Note', array(
 			'criteria'=>$criteria,
@@ -51,12 +51,12 @@ class NoteController extends Controller
 			$model->unsetAttributes();  // clear any default values
 			if(isset($_GET['q']))
 			{
-				$model->attributes['Title']=$_GET['q'];
-				$model->attributes['Content']=$_GET['q'];
+				$model->attributes['title']=$_GET['q'];
+				$model->attributes['content']=$_GET['q'];
 			}
 			if(isset($_GET['auth']))
 			{
-				$model->setAttributes(array("Author"=>$_GET['auth']));//attributes["Author"]=$_GET['auth'];
+				$model->setAttributes(array("author"=>$_GET['auth']));//attributes["author"]=$_GET['auth'];
 			}
 			$dataProvider = $model->search();
 		}//*/
@@ -74,11 +74,11 @@ class NoteController extends Controller
 		
 		$dataProvider=new CActiveDataProvider('Comment', array(
 			'criteria'=>array(
-				'condition'=>'id_Note='.$model->id_Note,
-				'order'=>'Date DESC',
+				'condition'=>'id_note='.$model->id_note,
+				'order'=>'date DESC',
 			),
 			'countCriteria'=>array(
-				'condition'=>'id_Note='.$model->id_Note,
+				'condition'=>'id_note='.$model->id_note,
 			),
 			'pagination'=>array(
 				'pageSize'=>20,
@@ -88,7 +88,7 @@ class NoteController extends Controller
 		$CModel=new Comment;
 		if(isset($_POST['Comment']))
 		{
-			$CModel=$this->actionAddComment($model->id_Note);			
+			$CModel=$this->actionAddComment($model->id_note);			
 		}
 
 		$this->render('view',array(
@@ -96,19 +96,21 @@ class NoteController extends Controller
 			'dataProvider'=>$dataProvider,
 			'CModel'=>$CModel,
 		));
-
+		echo "<p>start";
 		// $this->widget(
 		// 		'booster.widgets.TbSelect2', array(
-		// 	'asDropDownList' => false,
-		// 	'name' => 'clevertech',
-		// 	'options' => array(
-		// 		'tags' => array('clever', 'is', 'better', 'clevertech'),
-		// 		'placeholder' => 'type clever, or is, or just type!',
-		// 		'width' => '40%',
-		// 		'tokenSeparators' => array(',', ' ')
-		// 	)
+		// 			'asDropDownList' => false,
+		// 			'name' => 'clevertech',
+		// 			'options' => array(
+		// 				'tags' => array('clever', 'is', 'better', 'clevertech'),
+		// 				'placeholder' => 'type clever, or is, or just type!',
+		// 				'width' => '40%',
+		// 				'tokenSeparators' => array(',', ' ')
+		// 			)
 		// 		)
 		// );
+		echo "</p>";
+		//*/
 		// // Set up several flashes
 		// // (this should be done somewhere in controller, of course).
 		// $user = Yii::app()->getComponent('user');
@@ -130,34 +132,20 @@ class NoteController extends Controller
 		// );
 		 
 		// // Render them all with single `TbAlert`		
-		// $this->widget('yiibooster.widgets.TbAlert', array(
-		// 	'fade' => true,
-		// 	'closeText' => '&times;', // false equals no close link
-		// 	'events' => array(),
-		// 	'htmlOptions' => array(),
-		// 	'userComponentId' => 'user',
-		// 	'alerts' => array( // configurations per alert type
-		// 		// success, info, warning, error or danger
-		// 		'success' => array('closeText' => '&times;'),
-		// 		'info', // you don't need to specify full config
-		// 		'warning' => array('closeText' => false),
-		// 		'error' => array('closeText' => 'AAARGHH!!')
-		// 	),
-		// ));
 	}
 
-	public function actionAddComment($id_Note)
+	public function actionAddComment($id_note)
 	{
 		$CModel=new Comment;
-		$_POST['Comment']["Date"] = date("Y-m-d H:i:s");
-		$_POST['Comment']["id_Note"] = $id_Note;
+		$_POST['Comment']["date"] = date("Y-m-d H:i:s");
+		$_POST['Comment']["id_note"] = $id_note;
 		$CModel->attributes=$_POST['Comment'];
 		if($CModel->validate())
 		{
 			if($CModel->save())
 			{
 				Yii::log("Created comment", "info", "user");
-				//$this->redirect(array('view','id'=>$model->id_Note));
+				//$this->redirect(array('view','id'=>$model->id_note));
 				Yii::app()->user->setFlash('comment','Thank you for your comment.');
 				$this->refresh();
 			}
@@ -165,7 +153,7 @@ class NoteController extends Controller
 		return $CModel;
 	}
 
-	public function actionDelComment($id,$id_Note)
+	public function actionDelComment($id,$id_note)
 	{
 		$model=Comment::model()->findByPk($id);
 		if($model===null){
@@ -176,7 +164,7 @@ class NoteController extends Controller
 		Yii::log("Deleted comment", "info", "user");
 		//if(!isset($_GET['ajax']))
 			//$this->refresh();
-		$this->redirect(array('view','id'=>$model->id_Note));
+		$this->redirect(array('view','id'=>$model->id_note));
 	}
 
 	public function loadModel($id)
@@ -192,12 +180,12 @@ class NoteController extends Controller
 		$model=new Note;
 		if(isset($_POST['Note']))
 		{
-			$_POST['Note']["Date"]= date("Y-m-d H:i:s");
+			$_POST['Note']["date"]= date("Y-m-d H:i:s");
 			$model->attributes=$_POST['Note'];
 			if($model->save())
 			{
 				Yii::log("Created note", "info", "user");
-				$this->redirect(array('view','id'=>$model->id_Note));
+				$this->redirect(array('view','id'=>$model->id_note));
 			}
 		}
 		$this->render('create',array(
@@ -210,11 +198,11 @@ class NoteController extends Controller
 		$model=$this->loadModel($id);
 		if(isset($_POST['Note']))
 		{
-			$_POST['Note']["Date"]=date("Y-m-d H:i:s");
+			$_POST['Note']["date"]=date("Y-m-d H:i:s");
 			$model->attributes=$_POST['Note'];
 			if($model->save()){
 				Yii::log("Updated note", "info", "user");
-				$this->redirect(array('view','id'=>$model->id_Note));
+				$this->redirect(array('view','id'=>$model->id_note));
 			}
 		}
 		$this->render('update',array(
@@ -247,8 +235,8 @@ class NoteController extends Controller
 	{
 		return array(
 			'accessControl',
-			'postOnly + delete',
-			//array('booster.filters.BootstrapFilter - delete')
+			'postOnly + delete',		
+			array('application.extensions.yiibooster.filters.BoosterFilter - delete'),
 		);
 	}
 

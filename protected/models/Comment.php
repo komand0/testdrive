@@ -5,19 +5,19 @@
  *
  * The followings are the available columns in table 'comments':
  * @property integer $id
- * @property string $Author
- * @property string $Content
- * @property string $Date
- * @property integer $id_Note
+ * @property string $author
+ * @property string $content
+ * @property string $date
+ * @property integer $id_note
  *
  * The followings are the available model relations:
  * @property Notes $idNote
  */
 class Comment extends CActiveRecord
 {
-	public $Author;
-	public $Content;
-	public $Date;
+	public $author;
+	public $content;
+	public $date;
 	public $verifyCode;
 	/**
 	 * @return string the associated database table name
@@ -35,13 +35,13 @@ class Comment extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Author, Content, id_Note', 'required'),
-			array('id_Note', 'numerical', 'integerOnly'=>true),
-			array('Author', 'length', 'max'=>255),
-			array('Date', 'safe'),
+			array('author, content, id_note', 'required'),
+			array('id_note', 'numerical', 'integerOnly'=>true),
+			array('author', 'length', 'max'=>255),
+			array('date', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, Author, Content, Date, id_Note', 'safe', 'on'=>'search'),
+			array('id, author, content, date, id_note', 'safe', 'on'=>'search'),
 			array('verifyCode', 'captcha', 'allowEmpty'=>!CCaptcha::checkRequirements()),
 		);
 	}
@@ -54,7 +54,7 @@ class Comment extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'idNote' => array(self::BELONGS_TO, 'Notes', 'id_Note'),
+			'idNote' => array(self::BELONGS_TO, 'Notes', 'id_note'),
 		);
 	}
 
@@ -65,10 +65,10 @@ class Comment extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'Author' => Yii::t('Comment', 'Author'),
-			'Content' => Yii::t('Comment', 'Content'),
-			'Date' => Yii::t('Comment', 'Date'),
-			'id_Note' => 'Id Note',
+			'author' => Yii::t('Comment', 'Author'),
+			'content' => Yii::t('Comment', 'Content'),
+			'date' => Yii::t('Comment', 'Date'),
+			'id_note' => 'Id Note',
 			'verifyCode'=>Yii::t('app', 'Verification Code'),
 		);
 	}
@@ -92,10 +92,10 @@ class Comment extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('Author',$this->Author,true);
-		$criteria->compare('Content',$this->Content,true);
-		$criteria->compare('Date',$this->Date,true);
-		$criteria->compare('id_Note',$this->id_Note);
+		$criteria->compare('author',$this->author,true);
+		$criteria->compare('content',$this->content,true);
+		$criteria->compare('date',$this->date,true);
+		$criteria->compare('id_note',$this->id_note);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

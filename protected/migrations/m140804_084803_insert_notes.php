@@ -5,10 +5,10 @@ class m140804_084803_insert_notes extends CDbMigration
 	public function up()
 	{
 		$this->insert('notes', array(
-				'Author' => 'mr.I',
-				'Title' => 'My first Note',
-				'Content' => 'Hello world!',
-				'Date' => date("Y-m-d H:i:s"),
+				'author' => 'mr.I',
+				'title' => 'My first Note',
+				'content' => 'Hello world!',
+				'date' => date("Y-m-d H:i:s"),
 		));
 	}
 

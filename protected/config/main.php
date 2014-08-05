@@ -14,7 +14,10 @@ return array(
 	'defaultController'=>'note',
 
 	// preloading 'log' component
-	'preload'=>array('log'),
+	'preload'=>array(
+		'log',
+		'booster',
+		),
 
 	// autoloading model and component classes
 	'import'=>array(
@@ -62,19 +65,18 @@ return array(
 		// uncomment the following to use a MySQL database
 		//*///*
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=_notes',
+			'connectionString' => 'mysql:host=localhost;dbname=notes',
 			'emulatePrepare' => true,
-			'username' => 'user',
+			'username' => 'root',
 			'password' => 'pass',
 			'charset' => 'utf8',
 		),
-		'db1' => array(
-			'class' => 'DBConnection',
-			'connectionString' => ' pgsql:host=localhost;port=5432;dbname=testdb',
-			'username' => 'username',
-			'password' => 'password',
+		/*/
+		'db' => array(
+			'connectionString' => 'pgsql:host=localhost;port=5432;dbname=isin',
+			'username' => 'postgres',
+			'password' => 'pass',
 			'charset' => 'utf8',
-			'defaultSchema' => 'host1', // это имя первой схемы, соответствующей одному хосту
 		),
 		//*/
 		'errorHandler'=>array(
@@ -106,9 +108,9 @@ return array(
 		'cache'=>array(
 			'class'=>'system.caching.CFileCache',
 		),
-		'bootstrap' => array(
-            'class' => 'booster.components.Bootstrap',
-        ),
+		'booster' => array(
+			'class' => 'application.extensions.yiibooster.components.Booster',
+		),
 	),
 
 	// application-level parameters that can be accessed

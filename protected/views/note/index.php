@@ -5,24 +5,23 @@
 #@var auth
 
 if($auth!==false){
-	$breadcrumbs[Yii::t('Note', 'Notes')]=array('index');
-	$breadcrumbs['Author: '.$auth]=array('index','auth'=>urlencode($auth));
+	$breadcrumbs[Yii::t('Note', 'Notes')] = array('index');
+	$breadcrumbs['author: '.$auth] = array('index','auth'=>urlencode($auth));
 	if ($q!==false) {
-		$breadcrumbs['query: '.$q]=array('index','q'=>$q);
+		$breadcrumbs['query: '.$q] = array('index','q'=>$q);
 	}
 }
 elseif ($q!==false){
-	$breadcrumbs[Yii::t('Note', 'Notes')]=array('index');
-	$breadcrumbs['query: '.$q]=array('index','q'=>$q);
+	$breadcrumbs[Yii::t('Note', 'Notes')] = array('index');
+	$breadcrumbs['query: '.$q] = array('index','q'=>$q);
 }
 else {
-	$breadcrumbs=array(Yii::t('Note', 'Notes'));
+	$breadcrumbs = array(Yii::t('Note', 'Notes'));
 }
-$this->breadcrumbs=$breadcrumbs;
+$this->breadcrumbs = $breadcrumbs;
 
-$this->menu=array(
-	array('label'=>Yii::t('Note', 'Create note'), 'url'=>array('create')),
-
+$this->menu = array(
+	array('label' => Yii::t('Note', 'Create note'), 'url'=>array('create')),
 	/*
 	array('label'=> $this->renderPartial(
 		'_search',
@@ -31,14 +30,13 @@ $this->menu=array(
 );
 
 echo "<h1>".yii::t('Note', 'Notes')."</h1>";
-
 $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_view',
 	'itemsTagName'=>'table',
 	//'template'   => "<table>{items}</table>{pager}",
 	#'sortableAttributes'=>array(
-    #    'Date',
+    #    'date',
     #),
   'id'=>'ajaxListView',//?
 )); 

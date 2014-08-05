@@ -21,15 +21,15 @@
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'Author'); ?>
-		<?php echo $form->textField($model,'Author'); ?>
-		<?php echo $form->error($model,'Author'); ?>
+		<?php echo $form->labelEx($model,'author'); ?>
+		<?php echo $form->textField($model,'author'); ?>
+		<?php echo $form->error($model,'author'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'Content'); ?>
-		<?php echo $form->textArea($model,'Content',array('rows'=>3, 'cols'=>46)); ?>
-		<?php echo $form->error($model,'Content'); ?>
+		<?php echo $form->labelEx($model,'content'); ?>
+		<?php echo $form->textArea($model,'content',array('rows'=>3, 'cols'=>46)); ?>
+		<?php echo $form->error($model,'content'); ?>
 	</div>
 
 	<?php if(CCaptcha::checkRequirements()): ?>

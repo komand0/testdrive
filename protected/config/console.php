@@ -18,9 +18,9 @@ return array(
 		// uncomment the following to use a MySQL database
 		///*
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=_notes',
+			'connectionString' => 'mysql:host=localhost;dbname=notes',
 			'emulatePrepare' => true,
-			'username' => 'user',
+			'username' => 'root',
 			'password' => 'pass',
 			'charset' => 'utf8',
 		),

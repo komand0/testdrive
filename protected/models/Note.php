@@ -4,11 +4,11 @@
  * This is the model class for table "notes_list".
  *
  * The followings are the available columns in table 'notes_list':
- * @property integer $id_Note
- * @property string $Author
- * @property string $Title
- * @property string $Content
- * @property string $Date
+ * @property integer $id_note
+ * @property string $author
+ * @property string $title
+ * @property string $content
+ * @property string $date
  */
 class Note extends CActiveRecord
 {
@@ -27,17 +27,17 @@ class Note extends CActiveRecord
 	{
 		// NOTE: you should only define rules for those attributes that will receive user inputs.
 		return array(
-			array('Author, Title, Content', 'required'),
-			array('Author, Title', 'length', 'max'=>255),
+			array('author, title, content', 'required'),
+			array('author, title', 'length', 'max'=>255),
 		/*	array(
-            	'Author',
+            	'author',
             	'match', 'not' => true, 'pattern' => '/[^a-z0-9а-я _-]/iu',
             	'message' => 'Invalid characters in username.',
         	),//*/
-			array('Date', 'safe'),
+			array('date', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_Note, Author, Title, Content, Date', 'safe', 'on'=>'search'),
+			array('id_note, author, title, content, date', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -58,11 +58,11 @@ class Note extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id_Note' => Yii::t('Note', 'id'),
-			'Author' => Yii::t('Note', 'Author'),
-			'Title' => Yii::t('Note', 'Title'),
-			'Content' => Yii::t('Note', 'Content'),
-			'Date' => Yii::t('Note', 'Date'),
+			'id_note' => Yii::t('Note', 'Id'),
+			'author' => Yii::t('Note', 'Author'),
+			'title' => Yii::t('Note', 'Title'),
+			'content' => Yii::t('Note', 'Content'),
+			'date' => Yii::t('Note', 'Date'),
 		);
 	}
 
@@ -83,9 +83,9 @@ class Note extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
-		$criteria->compare('Author',$this->Author,false);
-		$criteria->compare('Title',$this->Title,true);
-		$criteria->compare('Content',$this->Content,true);
+		$criteria->compare('author',$this->author,false);
+		$criteria->compare('title',$this->title,true);
+		$criteria->compare('content',$this->content,true);
 		
 		return new CActiveDataProvider('Note', array(
 			'criteria'=>$criteria,
