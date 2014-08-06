@@ -42,8 +42,5 @@ Icon
 #cache files
 /protected/runtime/cache/
 
-#assets
-/assets
-
 #temp
 *~
