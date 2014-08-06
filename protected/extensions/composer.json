@@ -1,5 +1,5 @@
 {
-	"name": "acme/hello-world",
+	"name": "isin/hello-world",
 	"require": {
 		"clevertech/yii-booster": "v3.0.0"
 	}
