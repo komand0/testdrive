@@ -21,7 +21,7 @@ echo "<p class=\"content\">\n";
 echo nl2br(htmlspecialchars($model->content,ENT_COMPAT|ENT_HTML401,"UTF-8"));
 echo "</p>\n";
 echo "</td></tr>\n";
-echo "<tr><td>".Yii::t('Note', 'author').": <i>".htmlspecialchars($model->author)."</i><br>".Yii::t('Note', 'date of last modification').": <i>".$model->date."</i></td></tr>";
+echo "<tr><td>".Yii::t('Note', 'Author').": <i>".htmlspecialchars($model->author)."</i><br>".Yii::t('Note', 'Date of last modification').": <i>".$model->date."</i></td></tr>";
 echo "</table>";
 
 $this->renderPartial('_commentForm',array(

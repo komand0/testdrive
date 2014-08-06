@@ -1,0 +1,6 @@
+{
+	"name": "acme/hello-world",
+	"require": {
+		"clevertech/yii-booster": "v3.0.0"
+	}
+}

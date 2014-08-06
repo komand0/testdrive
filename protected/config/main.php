@@ -110,6 +110,7 @@ return array(
 		),
 		'booster' => array(
 			'class' => 'application.extensions.yiibooster.components.Booster',
+			//'class' => 'application.extensions.vendor.clevertech.yii-booster.src.components.Bootstrap',
 		),
 	),
 

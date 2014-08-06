@@ -96,7 +96,7 @@ class NoteController extends Controller
 			'dataProvider'=>$dataProvider,
 			'CModel'=>$CModel,
 		));
-		echo "<p>start";
+		
 		// $this->widget(
 		// 		'booster.widgets.TbSelect2', array(
 		// 			'asDropDownList' => false,
@@ -109,7 +109,7 @@ class NoteController extends Controller
 		// 			)
 		// 		)
 		// );
-		echo "</p>";
+		
 		//*/
 		// // Set up several flashes
 		// // (this should be done somewhere in controller, of course).
