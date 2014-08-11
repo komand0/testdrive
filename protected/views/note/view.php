@@ -20,7 +20,7 @@ echo "<tr><td><h3> ".nl2br(htmlspecialchars($model->title))."</h3></td></tr>\n";
 echo "<tr><td>\n";
 echo '<div class="note_content">'."\n";
 //echo nl2br(htmlspecialchars($model->content,ENT_COMPAT|ENT_HTML401,"UTF-8"));
-echo preg_replace_callback("@<script[^>]*?>.*?</script>@si", 'callback', $model->content);
+echo preg_replace_callback("@<[/]?script[^>]*?>@si", 'callback', $model->content);
 function callback ($data){
 	return htmlspecialchars($data[0],ENT_COMPAT|ENT_HTML401,"UTF-8");
 }
