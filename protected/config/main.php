@@ -43,6 +43,7 @@ return array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
 			'loginUrl'=>array('note/login'),
+			'class' => 'WebUser',
 		),
 		// uncomment the following to enable URLs in path-format
 		///*
@@ -79,6 +80,11 @@ return array(
 			'charset' => 'utf8',
 		),
 		//*/
+		'authManager'=>array(
+			'class'=>'application.components.PhpAuthManager',
+			//'connectionID'=>'db',
+			'defaultRoles' => array('author'),
+		),
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
 			'errorAction'=>'note/error',

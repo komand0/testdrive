@@ -41,6 +41,6 @@ Icon
 
 #cache files
 /protected/runtime/cache/
-
+/protected/runtime/state.bin
 #temp
 *~

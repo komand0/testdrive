@@ -1,5 +1,10 @@
 {
-	"name": "isin/hello-world",
+	"repositories":[
+        {
+            "type":"git",
+            "url":"https://github.com/clevertech/YiiBooster"
+        }
+    	],
 	"require": {
 		"clevertech/yii-booster": "v3.0.0"
 	}

@@ -9,7 +9,7 @@ class CheckCommentsCommand extends CConsoleCommand
 			"100% satisfied",
 			"Buy direct",
 			"Click to remove",
-			"Dear fiend",
+			"Dear friend",
 			"Free membership",
 			"asdf",
 			);
@@ -21,16 +21,15 @@ class CheckCommentsCommand extends CConsoleCommand
 			$comments = Yii::app()->db->createCommand()
 			->select('id, id_note')
 			->from($model->tableName())
-			//->join('tbl_profile p', 'u.id=p.user_id')
-			->where('content LIKE :value', array(':value'=>'%'.$value.'%'))
+			->where('LOWER(content) LIKE :value', array(':value'=>'%'.strtolower($value).'%'))
 			->queryAll();
-			//var_dump($comments);
 			foreach ($comments as $num => $comment) 
 			{
 				echo "id ".$comment['id']."\n";
 				$model = Comment::model()->findByPk($comment['id']);
 				if($model===null){
-					throw new CHttpException(404,'The requested comment does not exist.'.$model->id);
+					echo 'The requested comment does not exist.';
+					return 1;
 				}
 				$model->delete();
 				Yii::log("Deleted comment '".$model->id."' to note ".$model->id_note, "info", "user.command");

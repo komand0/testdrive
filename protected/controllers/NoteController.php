@@ -5,7 +5,7 @@ class NoteController extends Controller
 	public $layout='//layouts/column2';
 
 	public function actionIndex($q=false,$auth=false)
-	{		
+	{
 		$criteria=new CDbCriteria;
 		if($auth!==false)
 		{
@@ -31,7 +31,7 @@ class NoteController extends Controller
 			$criteria->condition .= " OR content LIKE '%".$_q."%')";
 			//throw new CHttpException(404,'au='.$criteria->condition);
 		}
-		
+
 		$criteria->order = 'date DESC';
 
 		$dataProvider = new CActiveDataProvider('Note', array(
@@ -96,42 +96,6 @@ class NoteController extends Controller
 			'dataProvider'=>$dataProvider,
 			'CModel'=>$CModel,
 		));
-		
-		// $this->widget(
-		// 		'booster.widgets.TbSelect2', array(
-		// 			'asDropDownList' => false,
-		// 			'name' => 'clevertech',
-		// 			'options' => array(
-		// 				'tags' => array('clever', 'is', 'better', 'clevertech'),
-		// 				'placeholder' => 'type clever, or is, or just type!',
-		// 				'width' => '40%',
-		// 				'tokenSeparators' => array(',', ' ')
-		// 			)
-		// 		)
-		// );
-		
-		//*/
-		// // Set up several flashes
-		// // (this should be done somewhere in controller, of course).
-		// $user = Yii::app()->getComponent('user');
-		// $user->setFlash(
-		// 	'success',
-		// 	"<strong>Well done!</strong> You're successful in reading this."
-		// );
-		// $user->setFlash(
-		// 	'info',
-		// 	"<strong>Heads up!</strong> I'm a valuable information!."
-		// );
-		// $user->setFlash(
-		// 	'warning',
-		// 	"<strong>Warning!</strong> Check yourself, you're not looking too good."
-		// );
-		// $user->setFlash(
-		// 	'error',
-		// 	'<strong>Oh snap!</strong> Change something and try submitting again.'
-		// );
-		 
-		// // Render them all with single `TbAlert`		
 	}
 
 	public function actionAddComment($id_note)
@@ -159,12 +123,15 @@ class NoteController extends Controller
 		if($model===null){
 			throw new CHttpException(404,'The requested comment does not exist.'.$model->id);
 		}
-		$model->delete();
+		if(Yii::app()->user->checkAccess('editNote',array('author'=>$model->author)))
+		{
+			$model->delete();
 
-		Yii::log("Deleted comment", "info", "user");
-		//if(!isset($_GET['ajax']))
-			//$this->refresh();
-		$this->redirect(array('view','id'=>$model->id_note));
+			Yii::log("Deleted comment", "info", "user");
+			$this->redirect(array('view','id'=>$model->id_note));
+		}
+		else
+			throw new CHttpException(403,'Forbidden.');
 	}
 
 	public function loadModel($id)
@@ -196,26 +163,37 @@ class NoteController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-		if(isset($_POST['Note']))
+		if(Yii::app()->user->checkAccess('updateNote',array('author'=>$model->author)))
 		{
-			$_POST['Note']["date"]=date("Y-m-d H:i:s");
-			$model->attributes=$_POST['Note'];
-			if($model->save()){
-				Yii::log("Updated note", "info", "user");
-				$this->redirect(array('view','id'=>$model->id_note));
+		    if(isset($_POST['Note']))
+			{
+				$_POST['Note']["date"]=date("Y-m-d H:i:s");
+				$model->attributes=$_POST['Note'];
+				if($model->save()){
+					Yii::log("Updated note", "info", "user");
+					$this->redirect(array('view','id'=>$model->id_note));
+				}
 			}
+			$this->render('update',array(
+				'model'=>$model,
+			));
 		}
-		$this->render('update',array(
-			'model'=>$model,
-		));
+		else
+			throw new CHttpException(403,'Forbidden.');
 	}
 
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
-		Yii::log("Deleted note", "info", "user");
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
+		$model=$this->loadModel($id);
+		if(Yii::app()->user->checkAccess('deleteNote',array('author'=>$model->author)))
+		{
+			$model->delete();
+			Yii::log("Deleted note", "info", "user");
+			if(!isset($_GET['ajax']))
+				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
+		}
+		else
+			throw new CHttpException(403,'Forbidden.');
 	}
 
 	public function actions()

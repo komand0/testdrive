@@ -16,11 +16,17 @@ $this->menu=array(
 
 echo "<table>\n";
 echo "<tr><td><h3> ".nl2br(htmlspecialchars($model->title))."</h3></td></tr>\n";
+
 echo "<tr><td>\n";
-echo "<p class=\"content\">\n";
-echo nl2br(htmlspecialchars($model->content,ENT_COMPAT|ENT_HTML401,"UTF-8"));
-echo "</p>\n";
+echo '<div class="note_content">'."\n";
+//echo nl2br(htmlspecialchars($model->content,ENT_COMPAT|ENT_HTML401,"UTF-8"));
+echo preg_replace_callback("@<script[^>]*?>.*?</script>@si", 'callback', $model->content);
+function callback ($data){
+	return htmlspecialchars($data[0],ENT_COMPAT|ENT_HTML401,"UTF-8");
+}
+echo "</div>\n";
 echo "</td></tr>\n";
+
 echo "<tr><td>".Yii::t('Note', 'Author').": <i>".htmlspecialchars($model->author)."</i><br>".Yii::t('Note', 'Date of last modification').": <i>".$model->date."</i></td></tr>";
 echo "</table>";
 
@@ -45,4 +51,5 @@ if($this->beginCache('c_'.$model->id_note.Yii::app()->language.Yii::app()->user-
 
 	$this->endCache(); 
 }
+
 ?>
